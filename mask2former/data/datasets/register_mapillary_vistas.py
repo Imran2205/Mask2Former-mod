@@ -1,8 +1,8 @@
 # Copyright (c) Facebook, Inc. and its affiliates.
 import os
 
-from detectron2.data import DatasetCatalog, MetadataCatalog
-from detectron2.data.datasets import load_sem_seg
+# from detectron2.data import DatasetCatalog, MetadataCatalog
+# from detectron2.data.datasets import load_sem_seg
 
 MAPILLARY_VISTAS_SEM_SEG_CATEGORIES = [
     {
@@ -481,27 +481,28 @@ def _get_mapillary_vistas_meta():
         "stuff_classes": stuff_classes,
         "stuff_colors": stuff_colors,
     }
+    print(ret)
     return ret
+_get_mapillary_vistas_meta()
 
-
-def register_all_mapillary_vistas(root):
-    root = os.path.join(root, "mapillary_vistas")
-    meta = _get_mapillary_vistas_meta()
-    for name, dirname in [("train", "training"), ("val", "validation")]:
-        image_dir = os.path.join(root, dirname, "images")
-        gt_dir = os.path.join(root, dirname, "labels")
-        name = f"mapillary_vistas_sem_seg_{name}"
-        DatasetCatalog.register(
-            name, lambda x=image_dir, y=gt_dir: load_sem_seg(y, x, gt_ext="png", image_ext="jpg")
-        )
-        MetadataCatalog.get(name).set(
-            image_root=image_dir,
-            sem_seg_root=gt_dir,
-            evaluator_type="sem_seg",
-            ignore_label=65,  # different from other datasets, Mapillary Vistas sets ignore_label to 65
-            **meta,
-        )
-
-
-_root = os.getenv("DETECTRON2_DATASETS", "datasets")
-register_all_mapillary_vistas(_root)
+# def register_all_mapillary_vistas(root):
+#     root = os.path.join(root, "mapillary_vistas")
+#     meta = _get_mapillary_vistas_meta()
+#     for name, dirname in [("train", "training"), ("val", "validation")]:
+#         image_dir = os.path.join(root, dirname, "images")
+#         gt_dir = os.path.join(root, dirname, "labels")
+#         name = f"mapillary_vistas_sem_seg_{name}"
+#         DatasetCatalog.register(
+#             name, lambda x=image_dir, y=gt_dir: load_sem_seg(y, x, gt_ext="png", image_ext="jpg")
+#         )
+#         MetadataCatalog.get(name).set(
+#             image_root=image_dir,
+#             sem_seg_root=gt_dir,
+#             evaluator_type="sem_seg",
+#             ignore_label=65,  # different from other datasets, Mapillary Vistas sets ignore_label to 65
+#             **meta,
+#         )
+#
+#
+# _root = os.getenv("DETECTRON2_DATASETS", "datasets")
+# register_all_mapillary_vistas(_root)

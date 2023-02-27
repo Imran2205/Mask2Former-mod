@@ -1,8 +1,8 @@
 # Copyright (c) Facebook, Inc. and its affiliates.
 import os
 
-from detectron2.data import DatasetCatalog, MetadataCatalog
-from detectron2.data.datasets import load_sem_seg
+# from detectron2.data import DatasetCatalog, MetadataCatalog
+# from detectron2.data.datasets import load_sem_seg
 
 ADE20K_SEM_SEG_FULL_CATEGORIES = [
     {"name": "wall", "id": 2978, "trainId": 0},
@@ -938,27 +938,29 @@ def _get_ade20k_full_meta():
         "stuff_dataset_id_to_contiguous_id": stuff_dataset_id_to_contiguous_id,
         "stuff_classes": stuff_classes,
     }
+    # print(ret["stuff_classes"][:])
     return ret
 
+_get_ade20k_full_meta()
 
-def register_all_ade20k_full(root):
-    root = os.path.join(root, "ADE20K_2021_17_01")
-    meta = _get_ade20k_full_meta()
-    for name, dirname in [("train", "training"), ("val", "validation")]:
-        image_dir = os.path.join(root, "images_detectron2", dirname)
-        gt_dir = os.path.join(root, "annotations_detectron2", dirname)
-        name = f"ade20k_full_sem_seg_{name}"
-        DatasetCatalog.register(
-            name, lambda x=image_dir, y=gt_dir: load_sem_seg(y, x, gt_ext="tif", image_ext="jpg")
-        )
-        MetadataCatalog.get(name).set(
-            stuff_classes=meta["stuff_classes"][:],
-            image_root=image_dir,
-            sem_seg_root=gt_dir,
-            evaluator_type="sem_seg",
-            ignore_label=65535,  # NOTE: gt is saved in 16-bit TIFF images
-        )
-
-
-_root = os.getenv("DETECTRON2_DATASETS", "datasets")
-register_all_ade20k_full(_root)
+# def register_all_ade20k_full(root):
+#     root = os.path.join(root, "ADE20K_2021_17_01")
+#     meta = _get_ade20k_full_meta()
+#     for name, dirname in [("train", "training"), ("val", "validation")]:
+#         image_dir = os.path.join(root, "images_detectron2", dirname)
+#         gt_dir = os.path.join(root, "annotations_detectron2", dirname)
+#         name = f"ade20k_full_sem_seg_{name}"
+#         DatasetCatalog.register(
+#             name, lambda x=image_dir, y=gt_dir: load_sem_seg(y, x, gt_ext="tif", image_ext="jpg")
+#         )
+#         MetadataCatalog.get(name).set(
+#             stuff_classes=meta["stuff_classes"][:],
+#             image_root=image_dir,
+#             sem_seg_root=gt_dir,
+#             evaluator_type="sem_seg",
+#             ignore_label=65535,  # NOTE: gt is saved in 16-bit TIFF images
+#         )
+#
+#
+# _root = os.getenv("DETECTRON2_DATASETS", "datasets")
+# register_all_ade20k_full(_root)
