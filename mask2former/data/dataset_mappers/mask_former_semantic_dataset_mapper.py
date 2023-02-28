@@ -171,9 +171,12 @@ class MaskFormerSemanticDatasetMapper:
         if "annotations" in dataset_dict:
             raise ValueError("Semantic segmentation dataset should not have 'annotations'.")
 
+        print(image.shape, sem_seg_gt.shape)
+
         # Prepare per-category binary masks
         if sem_seg_gt is not None:
             sem_seg_gt = sem_seg_gt.numpy()
+            print(image.shape, sem_seg_gt.shape)
             instances = Instances(image_shape)
             classes = np.unique(sem_seg_gt)
             # remove ignored region
