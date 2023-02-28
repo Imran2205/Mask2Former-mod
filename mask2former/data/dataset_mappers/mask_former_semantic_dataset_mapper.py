@@ -156,6 +156,7 @@ class MaskFormerSemanticDatasetMapper:
                 sem_seg_gt = F.pad(sem_seg_gt, padding_size, value=self.ignore_label).contiguous()
 
         image_shape = (image.shape[-2], image.shape[-1])  # h, w
+        print(image.shape, sem_seg_gt.shape)
 
         # Pytorch's dataloader is efficient on torch.Tensor due to shared-memory,
         # but not efficient on large generic data structures due to the use of pickle & mp.Queue.
