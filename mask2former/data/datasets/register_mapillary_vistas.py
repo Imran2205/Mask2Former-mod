@@ -481,7 +481,7 @@ def _get_mapillary_vistas_meta():
         "stuff_classes": stuff_classes,
         "stuff_colors": stuff_colors,
     }
-    print(ret)
+    # print(ret)
     return ret
 _get_mapillary_vistas_meta()
 
