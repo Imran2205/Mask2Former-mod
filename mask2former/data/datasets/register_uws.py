@@ -68,7 +68,7 @@ def register_all_uws(root):
             image_root=image_dir,
             sem_seg_root=gt_dir,
             evaluator_type="sem_seg",
-            ignore_label=65,  # different from other datasets, Mapillary Vistas sets ignore_label to 65
+            ignore_label=255,  # different from other datasets, Mapillary Vistas sets ignore_label to 65
             **meta,
         )
 
