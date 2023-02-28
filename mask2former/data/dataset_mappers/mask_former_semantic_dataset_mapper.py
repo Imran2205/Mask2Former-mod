@@ -108,7 +108,7 @@ class MaskFormerSemanticDatasetMapper:
         assert self.is_train, "MaskFormerSemanticDatasetMapper should only be used for training!"
 
         dataset_dict = copy.deepcopy(dataset_dict)  # it will be modified by code below
-        print(dataset_dict["file_name"])
+        # print(dataset_dict["file_name"])
         image = utils.read_image(dataset_dict["file_name"], format=self.img_format)
         utils.check_image_size(dataset_dict, image)
 
@@ -125,21 +125,21 @@ class MaskFormerSemanticDatasetMapper:
                 )
             )
 
-        print(image.shape)
+        # print(image.shape)
         aug_input = T.AugInput(image, sem_seg=sem_seg_gt)
         aug_input, transforms = T.apply_transform_gens(self.tfm_gens, aug_input)
         image = aug_input.image
         sem_seg_gt = aug_input.sem_seg
 
         # Pad image and segmentation label here!
-        print(image.shape)
+        # print(image.shape)
         image = torch.as_tensor(np.ascontiguousarray(image.transpose(2, 0, 1)))
         if sem_seg_gt is not None:
             sem_seg_gt = torch.as_tensor(sem_seg_gt.astype("long"))
 
         if self.size_divisibility > 0:
             image_size = (image.shape[-2], image.shape[-1])
-            print(image_size, image.shape)
+            # print(image_size, image.shape)
             padding_size = [
                 0,
                 self.size_divisibility - image_size[1],
@@ -156,6 +156,8 @@ class MaskFormerSemanticDatasetMapper:
         # but not efficient on large generic data structures due to the use of pickle & mp.Queue.
         # Therefore it's important to use torch.Tensor.
         dataset_dict["image"] = image
+        print(image.shape)
+        print(sem_seg_gt.shape)
 
         if sem_seg_gt is not None:
             dataset_dict["sem_seg"] = sem_seg_gt.long()
