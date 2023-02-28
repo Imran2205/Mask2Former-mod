@@ -71,6 +71,9 @@ def register_all_uws(root):
             ignore_label=255,  # different from other datasets, Mapillary Vistas sets ignore_label to 65
             **meta,
         )
+        print(f"{name}")
+
+    print("done")
 
 
 _root = "/kaggle/input/"
