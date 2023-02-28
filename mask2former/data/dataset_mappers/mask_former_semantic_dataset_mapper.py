@@ -61,6 +61,7 @@ class MaskFormerSemanticDatasetMapper:
     @classmethod
     def from_config(cls, cfg, is_train=True):
         # Build augmentation
+        print(cfg.INPUT.MIN_SIZE_TRAIN, cfg.INPUT.MAX_SIZE_TRAIN, cfg.INPUT.MIN_SIZE_TRAIN_SAMPLING)
         augs = [
             T.ResizeShortestEdge(
                 cfg.INPUT.MIN_SIZE_TRAIN,
@@ -135,6 +136,7 @@ class MaskFormerSemanticDatasetMapper:
 
         if self.size_divisibility > 0:
             image_size = (image.shape[-2], image.shape[-1])
+            print(image_size , image.shap)
             padding_size = [
                 0,
                 self.size_divisibility - image_size[1],
