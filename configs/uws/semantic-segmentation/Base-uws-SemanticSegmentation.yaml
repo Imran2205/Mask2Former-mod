@@ -17,7 +17,7 @@ DATASETS:
   TRAIN: ("uws_sem_seg_train",)
   TEST: ("uws_sem_seg_val",)
 SOLVER:
-  IMS_PER_BATCH: 16
+  IMS_PER_BATCH: 32
   BASE_LR: 0.0001
   MAX_ITER: 300000
   WARMUP_FACTOR: 1.0
