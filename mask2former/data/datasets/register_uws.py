@@ -73,5 +73,5 @@ def register_all_uws(root):
         )
 
 
-_root = os.getenv("DETECTRON2_DATASETS", "datasets")
+_root = "/kaggle/input/"
 register_all_uws(_root)
