@@ -140,6 +140,8 @@ class MaskFormerSemanticDatasetMapper:
         if sem_seg_gt is not None:
             sem_seg_gt = torch.as_tensor(sem_seg_gt.astype("long"))
 
+        print(image.shape, sem_seg_gt.shape)
+
         if self.size_divisibility > 0:
             image_size = (image.shape[-2], image.shape[-1])
             # print(image_size, image.shape)
