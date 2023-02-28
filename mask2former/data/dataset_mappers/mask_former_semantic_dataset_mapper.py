@@ -115,7 +115,7 @@ class MaskFormerSemanticDatasetMapper:
         if "sem_seg_file_name" in dataset_dict:
             # PyTorch transformation not implemented for uint16, so converting it to double first
             sem_seg_gt = utils.read_image(dataset_dict.pop("sem_seg_file_name")).astype("double")
-            print(sem_seg_gt.shape)
+            print(image.shape, sem_seg_gt.shape)
         else:
             sem_seg_gt = None
 
@@ -132,7 +132,7 @@ class MaskFormerSemanticDatasetMapper:
         image = aug_input.image
         sem_seg_gt = aug_input.sem_seg
 
-        print(sem_seg_gt.shape)
+        print(image.shape, sem_seg_gt.shape)
 
         # Pad image and segmentation label here!
         # print(image.shape)
