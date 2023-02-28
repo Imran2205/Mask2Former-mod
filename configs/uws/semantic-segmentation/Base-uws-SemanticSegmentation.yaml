@@ -14,8 +14,8 @@ MODEL:
     # NORM: "SyncBN"
     RES5_MULTI_GRID: [1, 1, 1]  # not used
 DATASETS:
-  TRAIN: ("mapillary_vistas_sem_seg_train",)
-  TEST: ("mapillary_vistas_sem_seg_val",)
+  TRAIN: ("uws_sem_seg_train",)
+  TEST: ("uws_sem_seg_val",)
 SOLVER:
   IMS_PER_BATCH: 16
   BASE_LR: 0.0001
@@ -34,23 +34,23 @@ SOLVER:
   AMP:
     ENABLED: True
 INPUT:
-  MIN_SIZE_TRAIN: !!python/object/apply:eval ["[int(x * 0.1 * 2048) for x in range(5, 21)]"]
+  MIN_SIZE_TRAIN: !!python/object/apply:eval ["[int(x * 0.1 * 256) for x in range(5, 21)]"]
   MIN_SIZE_TRAIN_SAMPLING: "choice"
-  MIN_SIZE_TEST: 2048
-  MAX_SIZE_TRAIN: 8192
-  MAX_SIZE_TEST: 2048
+  MIN_SIZE_TEST: 256
+  MAX_SIZE_TRAIN: 1024
+  MAX_SIZE_TEST: 256
   CROP:
     ENABLED: True
     TYPE: "absolute"
-    SIZE: (1024, 1024)
+    SIZE: (256, 256)
     SINGLE_CATEGORY_MAX_AREA: 1.0
   COLOR_AUG_SSD: True
-  SIZE_DIVISIBILITY: 1024  # used in dataset mapper
+  SIZE_DIVISIBILITY: 256  # used in dataset mapper
   FORMAT: "RGB"
   DATASET_MAPPER_NAME: "mask_former_semantic"
 TEST:
   EVAL_PERIOD: 0
 DATALOADER:
   FILTER_EMPTY_ANNOTATIONS: True
-  NUM_WORKERS: 10
+  NUM_WORKERS: 2
 VERSION: 2
