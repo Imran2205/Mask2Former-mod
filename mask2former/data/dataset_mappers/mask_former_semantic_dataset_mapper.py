@@ -61,7 +61,7 @@ class MaskFormerSemanticDatasetMapper:
     @classmethod
     def from_config(cls, cfg, is_train=True):
         # Build augmentation
-        print(cfg.INPUT.MIN_SIZE_TRAIN, cfg.INPUT.MAX_SIZE_TRAIN, cfg.INPUT.MIN_SIZE_TRAIN_SAMPLING)
+        # print(cfg.INPUT.MIN_SIZE_TRAIN, cfg.INPUT.MAX_SIZE_TRAIN, cfg.INPUT.MIN_SIZE_TRAIN_SAMPLING)
         augs = [
             T.ResizeShortestEdge(
                 cfg.INPUT.MIN_SIZE_TRAIN,
@@ -115,7 +115,7 @@ class MaskFormerSemanticDatasetMapper:
         if "sem_seg_file_name" in dataset_dict:
             # PyTorch transformation not implemented for uint16, so converting it to double first
             sem_seg_gt = utils.read_image(dataset_dict.pop("sem_seg_file_name")).astype("double")
-            print(image.shape, sem_seg_gt.shape)
+            # print(image.shape, sem_seg_gt.shape)
         else:
             sem_seg_gt = None
 
@@ -132,7 +132,7 @@ class MaskFormerSemanticDatasetMapper:
         image = aug_input.image
         sem_seg_gt = aug_input.sem_seg
 
-        print(image.shape, sem_seg_gt.shape)
+        # print(image.shape, sem_seg_gt.shape)
 
         # Pad image and segmentation label here!
         # print(image.shape)
@@ -140,7 +140,7 @@ class MaskFormerSemanticDatasetMapper:
         if sem_seg_gt is not None:
             sem_seg_gt = torch.as_tensor(sem_seg_gt.astype("long"))
 
-        print(image.shape, sem_seg_gt.shape)
+        # print(image.shape, sem_seg_gt.shape)
 
         if self.size_divisibility > 0:
             image_size = (image.shape[-2], image.shape[-1])
@@ -156,7 +156,7 @@ class MaskFormerSemanticDatasetMapper:
                 sem_seg_gt = F.pad(sem_seg_gt, padding_size, value=self.ignore_label).contiguous()
 
         image_shape = (image.shape[-2], image.shape[-1])  # h, w
-        print(image.shape, sem_seg_gt.shape)
+        # print(image.shape, sem_seg_gt.shape)
 
         # Pytorch's dataloader is efficient on torch.Tensor due to shared-memory,
         # but not efficient on large generic data structures due to the use of pickle & mp.Queue.
@@ -171,12 +171,12 @@ class MaskFormerSemanticDatasetMapper:
         if "annotations" in dataset_dict:
             raise ValueError("Semantic segmentation dataset should not have 'annotations'.")
 
-        print(image.shape, sem_seg_gt.shape)
+        # print(image.shape, sem_seg_gt.shape)
 
         # Prepare per-category binary masks
         if sem_seg_gt is not None:
             sem_seg_gt = sem_seg_gt.numpy()
-            print(image.shape, sem_seg_gt.shape)
+            # print(image.shape, sem_seg_gt.shape)
             instances = Instances(image_shape)
             classes = np.unique(sem_seg_gt)
             # remove ignored region
