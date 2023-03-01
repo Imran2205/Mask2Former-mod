@@ -15,7 +15,7 @@ UWS_SEM_SEG_CATEGORIES = {
     7:  {'name': 'otter',       'train_id': 6,   'color': (250, 170, 30)},
     8:  {'name': 'penguin',     'train_id': 7,   'color': (220, 220, 0)},
     9:  {'name': 'polar_bear',  'train_id': 8,   'color': (107, 142, 35)},
-    10: {'name': 'sea_anemone', 'train_id': 9,  'color': (152, 251, 152)},
+    10: {'name': 'sea_anemone', 'train_id': 9,   'color': (152, 251, 152)},
     11: {'name': 'sea_urchin',  'train_id': 10,  'color': (70,  130, 180)},
     12: {'name': 'seahorse',    'train_id': 11,  'color': (220, 20,  60)},
     13: {'name': 'seal',        'train_id': 12,  'color': (253, 0,   0)},
