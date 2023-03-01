@@ -5,7 +5,7 @@ from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.data.datasets import load_sem_seg
 
 UWS_SEM_SEG_CATEGORIES = {
-    0:  {'name': 'unlabeled',   'train_id': 0, 'color': (0,   0,   0)},
+    0:  {'name': 'unlabeled',   'train_id': 0,   'color': (0,   0,   0)},
     1:  {'name': 'crab',        'train_id': 1,   'color': (128, 64,  128)},
     2:  {'name': 'crocodile',   'train_id': 2,   'color': (244, 35,  232)},
     3:  {'name': 'dolphin',     'train_id': 3,   'color': (70,  70,  70)},
