@@ -38,11 +38,11 @@ UWS_SEM_SEG_CATEGORIES = {
 }
 
 
-def _get_mapillary_vistas_meta():
-    stuff_classes = [UWS_SEM_SEG_CATEGORIES[k]["name"] for k in UWS_SEM_SEG_CATEGORIES.keys()]
+def _get_uws_meta():
+    stuff_classes = [UWS_SEM_SEG_CATEGORIES[k]["name"] for k in UWS_SEM_SEG_CATEGORIES.keys() if UWS_SEM_SEG_CATEGORIES[k]["name"] != 'unlabeled']
     assert len(stuff_classes) == 29
 
-    stuff_colors = [list(UWS_SEM_SEG_CATEGORIES[k]["color"]) for k in UWS_SEM_SEG_CATEGORIES.keys()]
+    stuff_colors = [list(UWS_SEM_SEG_CATEGORIES[k]["color"]) for k in UWS_SEM_SEG_CATEGORIES.keys() if UWS_SEM_SEG_CATEGORIES[k]["name"] != 'unlabeled']
     assert len(stuff_colors) == 29
 
     ret = {
@@ -54,7 +54,7 @@ def _get_mapillary_vistas_meta():
 
 def register_all_uws(root):
     root = os.path.join(root, "data-uws-color/data_for_mask_2_former")
-    meta = _get_mapillary_vistas_meta()
+    meta = _get_uws_meta()
     for name, dirname in [("train", "train"), ("val", "validation")]:
         image_dir = os.path.join(root, dirname, "images")
         gt_dir = os.path.join(root, dirname, "labels")
