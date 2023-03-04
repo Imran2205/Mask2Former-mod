@@ -1,3 +1,10 @@
+import glob
+import os
+import shutil
+from tqdm import tqdm
+from PIL import Image
+import numpy as np
+
 PFB_SEM_SEG_CATEGORIES = {
     0:  {'name': 'unlabeled', 'color': (0, 0, 0), 'train_id': 255},
     1:  {'name': 'ambiguous', 'color': (111, 74, 0), 'train_id': 255},
@@ -32,3 +39,57 @@ PFB_SEM_SEG_CATEGORIES = {
     30: {'name': 'plane', 'color': (0, 100, 100), 'train_id': 255},
     31: {'name': 'boat', 'color': (50, 0, 90), 'train_id': 255},
 }
+
+
+dataset_root = ''
+dataset_out = ''
+
+
+def copy_files(state):
+    train_image_files = glob.glob(
+        os.path.join(
+            f'{dataset_root}/{state}/images',
+            f'*/*/*/*', f'*.png')
+    )
+
+    temp_label_files = glob.glob(
+        os.path.join(
+            f'{dataset_root}/{state}/labels',
+            f'*/*/*/*', f'*.png')
+    )
+
+    dataset_out_train_images = os.path.join(train_image_files, f'{state}/images')
+    dataset_out_train_labels = os.path.join(train_image_files, f'{state}/labels')
+    dataset_out_train_labels_color = os.path.join(train_image_files, f'{state}/labels_color')
+
+    if not os.path.exists(dataset_out_train_images):
+        os.makedirs(dataset_out_train_images)
+    if not os.path.exists(dataset_out_train_labels):
+        os.makedirs(dataset_out_train_labels)
+    if not os.path.exists(dataset_out_train_labels_color):
+        os.makedirs(dataset_out_train_labels_color)
+
+    for lbl in tqdm(temp_label_files):
+        shutil.copy(lbl, dataset_out_train_labels_color)
+        lbl_img = Image.open(lbl).convert('RGB')
+        lbl_img = np.array(lbl_img)
+        lbl_img_updated = np.ones(lbl_img.shape[:2]) * 255
+        for key in PFB_SEM_SEG_CATEGORIES.keys():
+            lbl_img_updated[lbl_img == PFB_SEM_SEG_CATEGORIES[key]['color']] = PFB_SEM_SEG_CATEGORIES[key]['train_id']
+        lbl_img_updated = lbl_img_updated.astype(np.uint8)
+        lbl_img_updated = Image.fromarray(lbl_img_updated, 'L')
+        lbl_img_updated.save(
+            os.path.join(
+                dataset_out_train_labels,
+                os.path.basename(lbl)
+            )
+        )
+
+    for img in tqdm(train_image_files):
+        shutil.copy(img, dataset_out_train_images)
+
+
+folders = ['train', 'val']
+
+for fol in folders:
+    copy_files(fol)
