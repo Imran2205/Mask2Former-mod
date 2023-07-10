@@ -53,7 +53,7 @@ def _get_uws_meta():
 
 
 def register_all_uws(root):
-    root = os.path.join(root, "data-uws-color/data_for_mask_2_former")
+    root = os.path.join(root, "uw_sem_seg_dataset")
     meta = _get_uws_meta()
     for name, dirname in [("train", "train"), ("val", "validation")]:
         image_dir = os.path.join(root, dirname, "images")
@@ -75,5 +75,5 @@ def register_all_uws(root):
     # print("done")
 
 
-_root = "/kaggle/input/"
+_root = "/content/"
 register_all_uws(_root)

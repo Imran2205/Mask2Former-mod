@@ -58,9 +58,9 @@ def copy_files(state):
             f'*/*/*/*', f'*.png')
     )
 
-    dataset_out_train_images = os.path.join(train_image_files, f'{state}/images')
-    dataset_out_train_labels = os.path.join(train_image_files, f'{state}/labels')
-    dataset_out_train_labels_color = os.path.join(train_image_files, f'{state}/labels_color')
+    dataset_out_train_images = os.path.join(dataset_out, f'{state}/images')
+    dataset_out_train_labels = os.path.join(dataset_out, f'{state}/labels')
+    dataset_out_train_labels_color = os.path.join(dataset_out, f'{state}/labels_color')
 
     if not os.path.exists(dataset_out_train_images):
         os.makedirs(dataset_out_train_images)
@@ -75,7 +75,9 @@ def copy_files(state):
         lbl_img = np.array(lbl_img)
         lbl_img_updated = np.ones(lbl_img.shape[:2]) * 255
         for key in PFB_SEM_SEG_CATEGORIES.keys():
-            lbl_img_updated[lbl_img == PFB_SEM_SEG_CATEGORIES[key]['color']] = PFB_SEM_SEG_CATEGORIES[key]['train_id']
+            indices = np.argwhere(np.all(lbl_img == PFB_SEM_SEG_CATEGORIES[key]['color'], axis=-1))
+            rr, cc = indices[:, 0], indices[:, 1]
+            lbl_img_updated[rr, cc] = PFB_SEM_SEG_CATEGORIES[key]['train_id']
         lbl_img_updated = lbl_img_updated.astype(np.uint8)
         lbl_img_updated = Image.fromarray(lbl_img_updated, 'L')
         lbl_img_updated.save(
