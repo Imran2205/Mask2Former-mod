@@ -31,7 +31,7 @@ CARLA_SEM_SEG_CATEGORIES = {
 }
 
 
-def _get_pfb_meta():
+def _get_carla_meta():
     stuff_classes = [CARLA_SEM_SEG_CATEGORIES[k]["name"] for k in CARLA_SEM_SEG_CATEGORIES.keys() if CARLA_SEM_SEG_CATEGORIES[k]["id"] != 255]
     assert len(stuff_classes) == 21
 
@@ -45,9 +45,9 @@ def _get_pfb_meta():
     return ret
 
 
-def register_all_pfb(root):
+def register_all_carla(root):
     root = os.path.join(root, "carla_semantic")
-    meta = _get_pfb_meta()
+    meta = _get_carla_meta()
     for name, dirname in [("train", "train"), ("val", "validation")]:
         image_dir = os.path.join(root, dirname, "images")
         gt_dir = os.path.join(root, dirname, "labels")
@@ -69,4 +69,4 @@ def register_all_pfb(root):
 
 
 _root = "/content/"
-register_all_pfb(_root)
+register_all_carla(_root)
