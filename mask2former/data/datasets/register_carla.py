@@ -46,7 +46,7 @@ def _get_pfb_meta():
 
 
 def register_all_pfb(root):
-    root = os.path.join(root, "data-uws-color/data_for_mask_2_former")
+    root = os.path.join(root, "carla_semantic")
     meta = _get_pfb_meta()
     for name, dirname in [("train", "train"), ("val", "validation")]:
         image_dir = os.path.join(root, dirname, "images")
@@ -68,5 +68,5 @@ def register_all_pfb(root):
     # print("done")
 
 
-_root = "/kaggle/input/"
+_root = "/content/"
 register_all_pfb(_root)
