@@ -51,7 +51,7 @@ def register_all_pfb(root):
     for name, dirname in [("train", "train"), ("val", "validation")]:
         image_dir = os.path.join(root, dirname, "images")
         gt_dir = os.path.join(root, dirname, "labels")
-        name = f"pfb_sem_seg_{name}"
+        name = f"carla_sem_seg_{name}"
         DatasetCatalog.register(
             name, lambda x=image_dir, y=gt_dir: load_sem_seg(y, x, gt_ext="png", image_ext="png")
         )
