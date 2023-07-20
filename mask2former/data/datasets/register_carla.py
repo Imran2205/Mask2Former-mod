@@ -68,5 +68,5 @@ def register_all_carla(root):
     # print("done")
 
 
-_root = "/content/"
+_root = "/kaggle/working/"
 register_all_carla(_root)
